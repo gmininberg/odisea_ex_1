@@ -1,20 +1,33 @@
 #!/usr/bin/env python
 import dpkt
 from twisted.protocols import sip #should be good sip lib but can use any other sip lib.
-
 import sys, getopt
 
 outputPath = ''
 
-#make SDP dialog class which discribes the SDP codec.
-class dialog(object):
-    """docstring for dialog"""
-    def __init__(self, codecs, payloads):
-        super(dialog, self).__init__()
-        self.arg = arg
-
 def post_output_for_test():
     #post the output files (caller and callee) to check in the exxrcise server
+
+#code info that got the codec and and its payloadType
+class codecInfo(object):
+    """docstring for dialog"""
+    def __init__(self, codecName, payloadType):
+        super(dialog, self).__init__()
+        self.codecName = codecName
+        self.payloadType = payloadType
+
+#sdp description:
+#codeinfo - array of all codecs.
+#seq number - number of the request.
+#isLocal - local or remote sdp.
+class sdpDescription(object):
+    """docstring for sdpDescription"""
+    def __init__(self, codecInfoArr, seqNum, isLocal):
+        super(sdpDescription, self).__init__()
+        for codecInfo in codecInfoArr:
+            self.codecInfoArr.append(codecInfo)
+        self.seqNum = seqNum
+        self.isLocal = isLocal
 
 def is_register_request(buf):
     #chcke for the local user address will need that later
@@ -25,15 +38,15 @@ def is_invite(buf):
     pass
 
 def is_invite_dialog_close():
-    #check if invite got 200 OK
+    #check if invite got 200 OK (can be both remote or local invite)
     pass
 
 def set_neg_codec(dialog):
-    #once a dialog is closed then get the codec we are using
+    #once a dialog is closed then get the codec we are using set the selected codecInfo
     pass
 
 def read_sdp(buf):
-    #read the sdp (invite and 200OK)
+    #read the sdp (invite and 200OK) use sdpDescription for saving data
     pass
 
 def check_rtp_valid(buf):
@@ -88,6 +101,8 @@ def analyze_voip(pcap):
         else:
             #ignore
             pass
+    post_output_for_test()
+    print 'done!!!'
         
 def main(argv):
    inputfile = ''
@@ -108,7 +123,9 @@ def main(argv):
             print 'exercise_1.py -i <inputfile>'
             sys.exit()
 
-   print 'Input file is ', inputfile
+   print 'Input file is \n', inputfile
+   print 'Output path is \n', outputPath
+
    with open(inputfile, 'rb') as f:
         pcap = dpkt.pcap.Reader(f)
         analyze_voip(pcap)
