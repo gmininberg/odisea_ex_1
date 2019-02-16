@@ -34,7 +34,6 @@ def set_neg_codec(dialog):
 
 def read_sdp(buf):
     #read the sdp (invite and 200OK)
-    sdp = dialog(codecs, payloads)
     pass
 
 def check_rtp_valid(buf):
