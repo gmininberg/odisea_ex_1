@@ -14,7 +14,7 @@ class dialog(object):
         self.arg = arg
 
 def post_output_for_test():
-    #post the output files to check in the exxrcise server
+    #post the output files (caller and callee) to check in the exxrcise server
 
 def is_register_request(buf):
     #chcke for the local user address will need that later
