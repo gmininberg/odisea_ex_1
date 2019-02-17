@@ -11,12 +11,10 @@ def post_output_for_test():
 #code info that got the codec and and its payloadType
 class codecInfo(object):
     """docstring for dialog"""
-    def __init__(self, codecName, payloadType, portSource, portDest):
+    def __init__(self, codecName, payloadType):
         super(dialog, self).__init__()
         self.codecName = codecName
         self.payloadType = payloadType
-        self.portSource = portSource
-        self.portDest = portDest
 
 
 neg_codec_info = codecInfo("", -1)
@@ -27,12 +25,14 @@ neg_codec_info = codecInfo("", -1)
 #isLocal - local or remote sdp.
 class sdpDescription(object):
     """docstring for sdpDescription"""
-    def __init__(self, codecInfoArr, seqNum, isLocal):
+    def __init__(self, codecInfoArr, seqNum, isLocal, portSource, portDest):
         super(sdpDescription, self).__init__()
         for codecInfo in codecInfoArr:
             self.codecInfoArr.append(codecInfo)
         self.seqNum = seqNum
         self.isLocal = isLocal
+        self.portSource = portSource
+        self.portDest = portDest
 
 def is_register_request(buf):
     #chcke for the local user address will need that later
@@ -79,8 +79,8 @@ def is_local_rtp(buf):
 def check_is_sip(buf):
     pass
 
-def check_is_rtp(sorce_port, dest_port):
-    if neg_codec_info.portSource == sorce_port and neg_codec_info.portDest == dest_port or neg_codec_info.portSource == dest_port and neg_codec_info.portDest == sorce_port:
+def check_is_rtp(sorce_port, dest_port, sdp):
+    if sdp.portSource == sorce_port and sdp.portDest == dest_port or sdp.portSource == dest_port and sdp.portDest == sorce_port:
         return true
     return false
 
@@ -88,7 +88,7 @@ def check_is_rtcp(buf):
     pass
 
 def analyze_voip(pcap):
-    
+
     for line in pcap:
         #take line and decode it to buffer
         buf = ''
@@ -143,7 +143,7 @@ def main(argv):
 
     print 'Input file is \n', inputfile
     print 'Output path is \n', outputPath
-    pcap = rdpcap(inputfile)
+    pcap = PcapReader(inputfile)
     analyze_voip(pcap)
 
 if __name__ == "__main__":
