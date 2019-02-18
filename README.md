@@ -65,14 +65,18 @@ you can use this example to read the SDP: https://www.kamailio.org/wiki/scripts/
 
 # RTP:
 you will have to use bytearray out of the udp[RAW]. just a hint: the header size is 12 byte.
+
 this is the RFC https://tools.ietf.org/html/rfc3550#page-13 (we dont have contributing source (CSRC) identifiers) use the RFC to find the payload type of the RTP.
 
 # wave:
+simple example:
+```
 wavfile = wave.open(fieName, 'wb')
 wavfile.setnchannels(1)
 wavfile.setframerate(8000)
 wavfile.setsampwidth(2)
 wavfile.writeframesraw(bytearray) or wavfile.writeframes(bytearray)
+```
 read more at: https://docs.python.org/2/library/wave.html#module-wave
 
 
