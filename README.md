@@ -1,5 +1,10 @@
 # odisea_ex_1
 
+# WIFI
+Network : VonageGuest (Click on -  'Already have an account? Sign in' at the buttom of the page ) 
+Username	91406096
+Password	029328
+
 # how to use Twisted
 you can look at this example: http://cs.uccs.edu/~cs526/svoip/src/shtoom/shtoom/sip.py
 but this is the main flow you need:
